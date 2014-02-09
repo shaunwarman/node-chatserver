@@ -16,7 +16,7 @@ Chat.prototype.changeRoom = function(room) {
 	});
 };
 
-Char.prototype.processCommand = function(command) {
+Chat.prototype.processCommand = function(command) {
 	var words = command.split(' ');
 	var command = words[0]
 					.substring(1, words[0].length)
@@ -27,11 +27,13 @@ Char.prototype.processCommand = function(command) {
 		case 'join':
 			words.shift();
 			var room = words.join(' ');
+			console.log("Attempting to change rooms to " + room);
 			this.changeRoom(room);
 			break;
 		case 'nick':
 			words.shift();
 			var name = words.join(' ');
+			console.log("Attempting to change name to " + name);
 			this.socket.emit('nameAttempt', name);
 			break;
 
