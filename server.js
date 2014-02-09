@@ -9,7 +9,8 @@ var cache = {};
 var server = http.createServer(function(request, response) {
 	var filePath = false;
 
-	if(request.url == '/') {
+	console.log("Request url: " + request.url);
+	if(request.url == '/') { 
 		filePath = 'public/index.html';
 	} else {
 		filePath = 'public' + request.url;
@@ -37,6 +38,7 @@ function sendFile(response, filePath, fileContents) {
 
 // serve the resource, if possible
 function serveStatic(response, cache, absPath) {
+	console.log("Server static" + cache + " : " + absPath);
 	// check if file is cached
 	if(cache[absPath]) {
 		// serve file from memory
@@ -48,6 +50,7 @@ function serveStatic(response, cache, absPath) {
 				// read the file from the dick
 				fs.readFile(absPath, function(err, data) {
 					if(err) {
+						console.log("Hit an error");
 						send404(response);
 					} else {
 						cache[absPath] = data;
@@ -56,6 +59,7 @@ function serveStatic(response, cache, absPath) {
 					}
 				});
 			} else {
+				console.log("Does not exist in " + absPath);
 				send404(response);
 			}
 		});
